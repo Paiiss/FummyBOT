@@ -57,6 +57,13 @@ Edit the required value in `config.json`.
 ```cmd
 > npm start
 ```
+# The bot is already running on your token that you entered
 
 ## Note:
-* You can use node / nodemon, you can set the settings in ```package.json```
+* You can use node / nodemon, you can set the settings in ```package.json``` and house nodemon to be a node
+
+# Thanks To
+* [`Telegraf`](https://www.npmjs.com/package/telegraf)
+* [`LolHuman`](https://github.com/LoL-Human/)
+* [`Puh dhil`](https://github.com/Dhil-J)
+* [`vhtear`](https://github.com/fckveza/)
