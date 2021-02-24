@@ -18,6 +18,9 @@
 ## This script is free / open to anyone! If you want to add orders, please contribute / withdraw requests! Buying and selling scripts is prohibited!
 
 ## How to get a bot token
+* Open telegram and search for @BotFather
+* Type / newbot
+* Follow all the instructions given, and copy the token into the token column in ```setting.json```
 
 
 ## ✍️ Editing the file
