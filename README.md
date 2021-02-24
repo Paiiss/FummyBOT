@@ -28,7 +28,8 @@ Edit the required value in `config.json`.
     "paisKey": "Fummy",
     "lolKey": "Apikey",
     "vhKey": "Apikey" 
-}```
+}
+```
 
 # Requirements
 * [Node.js](https://nodejs.org/en/)
