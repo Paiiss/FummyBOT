@@ -75,7 +75,6 @@ function sendsearch(ctx){
         .catch(err => console.log(err))
     }
 
-
 function sendProses(ctx){
     // let chatId = msg.chat.id;
     let botReply = "Wait, in progress"
@@ -103,7 +102,6 @@ function sendMessageStart(ctx){
         var jam = date.getHours();
         var menit = date.getMinutes();
         var detik = date.getSeconds();
-        var waktoo = date.getHours();
             switch(hari) {
                 case 0: hari = "Minggu"; break;
                 case 1: hari = "Senin"; break;
@@ -126,32 +124,6 @@ function sendMessageStart(ctx){
                 case 9: bulan1 = "Oktober"; break;
                 case 10: bulan1 = "November"; break;
                 case 11: bulan1 = "Desember"; break;
-            }
-            switch(waktoo){
-                case 0: waktoo = "Tengah Malam🌚"; break;
-                case 1: waktoo = "Tengah Malam🌒"; break;
-                case 2: waktoo = "Dini Hari🌒"; break;
-                case 3: waktoo = "Dini Hari🌓"; break;
-                case 4: waktoo = "Subuh🌔"; break;
-                case 5: waktoo = "Subuh🌔"; break;
-                case 6: waktoo = "Pagi🌝"; break;
-                case 7: waktoo = "Pagi🌝"; break;
-                case 8: waktoo = "Pagi🌝"; break;
-                case 9: waktoo = "Pagi"; break;
-                case 10: waktoo = "Pagi🌞"; break;
-                case 11: waktoo = "Siang🌞"; break;
-                case 12: waktoo = "Siang🌞"; break;
-                case 13: waktoo = "Siang🌞"; break;
-                case 14: waktoo = "Siang🌞"; break;
-                case 15: waktoo = "Sore🌝"; break;
-                case 16: waktoo = "Sore🌝"; break;
-                case 17: waktoo = "Sore🌖"; break;
-                case 18: waktoo = "Magrib🌘"; break;
-                case 19: waktoo = "Magrib🌚"; break;
-                case 20: waktoo = "Malam🌚"; break;
-                case 21: waktoo = "midnight🌚"; break;
-                case 22: waktoo = "midnight🌚"; break;
-                case 23: waktoo = "midnight🌚"; break;
             }
             var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
             var tampilWaktu = "*Time :* " + jam + ":" + menit + ":" + detik + " Wib⌚";
@@ -388,6 +360,7 @@ bot.action('download', (ctx) => {
 ❏ /tiktok \`< Tiktok download NoWM >\`
 ❏ /ytmp3 \`< Download ytmp3 >\`
 ❏ /ytvideo \`< Download yt vIdeo >\`
+❏ /ytsearch \`< Search for youtube content >\`
 `,
     {
         reply_markup: {
