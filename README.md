@@ -47,3 +47,16 @@ Edit the required value in `config.json`.
 > git clone https://github.com/Paiiss/FummyBOT.git
 > cd FummyBOT
 ```
+
+## Install the package
+```cmd
+> npm i
+```
+
+## Run the bot
+```cmd
+> npm start
+```
+
+## Note:
+* You can use node / nodemon, you can set the settings in ```package.json```
