@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/Paiiss/Pais/blob/main/Fummy.jpg?raw=true" alt="FummyBOT"width="140" height="160" />
+<img src="https://github.com/Paiiss/Pais/blob/main/Fummy.jpg?raw=true" alt="FummyBOT"width="240" height="260" />
 <p align="center">
   <a href="https://github.com/"><img title="Author" src="https://img.shields.io/badge/Author-Paiiss-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
@@ -16,6 +16,7 @@
 # Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
+* Intention
 * Any text editor
 
 # Installation
