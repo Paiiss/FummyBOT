@@ -71,7 +71,7 @@ function sendsearch(ctx){
     bot.telegram.sendMessage(ctx.chat.id ,botReply)
         .then((result) => { setTimeout(() => {
             bot.telegram.deleteMessage(ctx.chat.id, result.message_id)
-        }, 10 *  500)})
+        }, 10 *  250)})
         .catch(err => console.log(err))
     }
 
@@ -127,9 +127,7 @@ function sendMessageStart(ctx){
             }
             var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
             var tampilWaktu = "*Time :* " + jam + ":" + menit + ":" + detik + " Wib⌚";
-    const tm = `●▬▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬▬●
-
-❏ *I am Eriri and I'm a bot💞*
+    const tm = `●▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬●
 
 ❖ Name : *${ctx.botInfo.first_name}*
 ❖ Version : \`1.0.0\`
@@ -164,7 +162,7 @@ function sendMessageStart(ctx){
 }
 
 function sendInfo(ctx){
-    const text = `●▬▬▬▬▬▬ஜ𝐈𝐧𝐟𝐨ஜ▬▬▬▬▬▬●
+    const text = `●▬▬▬▬ஜ𝐈𝐧𝐟𝐨ஜ▬▬▬▬●
 
 This is a free bot for everyone to use😳.
 
@@ -223,7 +221,7 @@ Very Thanks for Your donation. 😁
     })
 }
 function sendMessageMenu(ctx){
-    const tmenu = `●▬▬▬▬▬▬ஜ𝐌𝐞𝐧𝐮ஜ▬▬▬▬▬▬●
+    const tmenu = `●▬▬▬ஜ𝐌𝐞𝐧𝐮ஜ▬▬▬●
 
 Select one of the blocks below:
 ` 
@@ -238,6 +236,9 @@ Select one of the blocks below:
                 [
                     { text: 'Edu Menu🔍', callback_data: 'news'},
                     { text: 'Other menu🧮', callback_data: 'etc'}
+                ],
+                [
+                    { text: 'Nsfw🔞', callback_data: 'nsfw'}
                 ],
                 [
                     { text: 'Back!🔙', callback_data: 'start'}
@@ -336,7 +337,7 @@ bot.command('menu', (ctx) => {
 
 bot.action('etc', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿──────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋──────✿
+    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋────✿
     
 ❏ /truthid \`< The truth challenge ind >\`
 ❏ /nulis \`< Write in books >\`
@@ -355,7 +356,7 @@ bot.action('etc', (ctx) => {
 
 bot.action('download', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐌𝐞𝐧𝐮 ⌋────✿
+    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐌𝐞𝐧𝐮 ⌋───✿
     
 ❏ /tiktok \`< Tiktok download NoWM >\`
 ❏ /ytmp3 \`< Download ytmp3 >\`
@@ -376,7 +377,7 @@ bot.action('download', (ctx) => {
 
 bot.action('music', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿─────⌈ 𝐌𝐮𝐬𝐢𝐜 𝐌𝐞𝐧𝐮 ⌋─────✿
+    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐌𝐮𝐬𝐢𝐜 𝐌𝐞𝐧𝐮 ⌋───✿
     
 ❏ /joox \`< Joox Music >\`
 ❏ /play \`< Play music >\`
@@ -416,6 +417,25 @@ bot.action('news', (ctx) => {
     })
 })
 
+bot.action('nsfw', (ctx) => {
+    ctx.deleteMessage()
+    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐍𝐬𝐟𝐰 𝐌𝐞𝐧𝐮 ⌋───✿
+    
+❏ /xnxx \`< Xnxx downloader >\`
+❏ /hentai \`< Random hentai >\`
+`,
+    {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'Back!🔙', callback_data: 'menu'}
+                ]
+            ]
+        },
+        parse_mode: "Markdown"
+    })
+})
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // bot.use((ctx, next) => {
@@ -427,6 +447,22 @@ bot.action('news', (ctx) => {
 //     }
 //     next()
 // })
+
+bot.command('contoh', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "masuin text"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        ctx.reply(messager)
+    }
+})
 
 
                 /* Fitur */
@@ -443,7 +479,9 @@ bot.command('truthid', (ctx) => {
 
     })
 
-    /* Education Fiture */
+            /* Education Fiture */
+
+
 bot.command('merdeka', async (ctx) => {
         try{
         sendsearch(ctx)
@@ -506,11 +544,12 @@ bot.command('gempa', async (ctx) => {
     }
 })
 
-bot.command('hentai', (ctx) => {
+bot.command('hentai', async (ctx) => {
         try{
-        const SN = GenerateSerialNumber(jsjs)
         sendsearch(ctx)
-        ctx.replyWithPhoto(`https://pencarikode.xyz/nsfw/hentai?apikey=${paisKey}&api=${SN}`)
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/waifu?apikey=${lolKey}`)
+        const data = link.data.result
+        ctx.replyWithPhoto({url: data}, {caption: `Random hentai`})
         }catch(e){
             messageError(ctx)
         }
@@ -519,6 +558,21 @@ bot.command('hentai', (ctx) => {
 
             /* Other Fiture */
 
+bot.command('nulis', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter text, for example: /nulis pais"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/nulis?apikey=${lolKey}&text=${messager}`})
+    }
+})
 bot.command('tolol', async (ctx) => {
         let input = ctx.message.text
         let inputArray = input.split(" ")
@@ -762,6 +816,46 @@ bot.command('tiktok', async (ctx) => {
 })
 
 
+            // 18 ++++++ //
+bot.command('xnxx', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Enter the link, for example /xnxx https://www.xnxx.com/video-uy5a73b/mom_is_horny_-_brooklyn"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+    try{
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/xnxx?apikey=${lolKey}&url=${messager}`)
+        const data = link.data.result
+        ctx.replyWithPhoto({url: data.thumbnail}, {caption: `─────✿ 𝐱𝐧𝐱𝐱 ✿─────
+
+❖ Title: ${data.title}
+❖ Duration: ${data.duration}
+❖ View: ${data.view}
+❖ Rating: ${data.rating}
+❖ Like: ${data.like}
+❖ Dislike: ${data.dislike}
+❖ comment: ${data.comment}
+
+❖ Tag: ${data.tag}
+
+❖ Desc: ${data.description}
+        `})
+        // console.log(data.link[2].link)
+        sendLoading(ctx)
+        ctx.replyWithVideo({url: data.link[1].link})
+    }catch(e){
+        ctx.reply(`Video not found / wrong link!`)
+        }
+    }
+})
+
+//ctx.reply(`err`)
 bot.launch()
 
 // Enable graceful stop
