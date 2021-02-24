@@ -13,6 +13,23 @@
 
 </div>
 
+## Information
+
+## This script is free / open to anyone! If you want to add orders, please contribute / withdraw requests! Buying and selling scripts is prohibited!
+
+## How to get a bot token
+
+
+## ✍️ Editing the file
+Edit the required value in `config.json`.
+```json
+{
+    "Token": "TOKEN BOT",
+    "paisKey": "Fummy",
+    "lolKey": "Apikey",
+    "vhKey": "Apikey" 
+}```
+
 # Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
