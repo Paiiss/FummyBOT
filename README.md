@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/Paiiss/Pais/blob/main/Fummy.jpg?raw=true" alt="FummyBOT"width="128" height="150" />
+<img src="https://github.com/Paiiss/Pais/blob/main/Fummy.jpg?raw=true" alt="FummyBOT"width="140" height="160" />
 <p align="center">
   <a href="https://github.com/"><img title="Author" src="https://img.shields.io/badge/Author-Paiiss-purple.svg?style=for-the-badge&logo=github" /></a>
 </p>
@@ -17,5 +17,5 @@
 ## Cloning this repo
 ```cmd
 > git clone https://github.com/Paiiss/FummyBOT.git
-> cd BocchiBot
+> cd FummyBOT
 ```
