@@ -6,7 +6,10 @@ const { Extra } = require('telegraf')
 const os = require('os') 
 const moment = require(`moment-timezone`)
 const speed = require(`performance-now`);
-const fs = require('fs')
+const fs = require('fs');
+const { createGzip } = require('zlib');
+const imgToPDF = require('image-to-pdf');
+const imagesToPdf = require("images-to-pdf")
 
 // Load File
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
@@ -93,6 +96,9 @@ function sendLoading(ctx){
         }, 10 *  1000)})
         .catch(err => console.log(err))
     }
+const sleep = async (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 function sendMessageStart(ctx){
     var date = new Date();
     var tahun = date.getFullYear();
@@ -191,7 +197,7 @@ Greetings from pais.`
         })
 }
 function sendDonation(ctx){
-    const tmenu = `●▬▬▬▬▬ஜ𝐃𝐨𝐧𝐚𝐭𝐞ஜ▬▬▬▬▬●
+    const tmenu = `●▬▬▬▬ஜ𝐃𝐨𝐧𝐚𝐭𝐞ஜ▬▬▬▬●
 
 Glad to hear that you wanted to donate to pais. All donations will help and motivate him to make me better in the future.
 
@@ -238,7 +244,12 @@ Select one of the blocks below:
                     { text: 'Other menu🧮', callback_data: 'etc'}
                 ],
                 [
-                    { text: 'Nsfw🔞', callback_data: 'nsfw'}
+                    { text: 'Anime 🧸', callback_data: 'anime'},
+                    { text: 'Text Maker🖼', callback_data: 'textmaker'}
+                ],
+                [
+                    { text: 'Stalk Menu🔎', callback_data: 'stalk'},
+                    { text: 'Random Menu🔫', callback_data: 'random'}
                 ],
                 [
                     { text: 'Back!🔙', callback_data: 'start'}
@@ -265,7 +276,7 @@ function sendMessageping(ctx){
     const timestamp = speed();
     const latensi = speed() - timestamp
     const tutid = moment().millisecond()
-    const tmenu = `⍟▬▬▬▬▬ஜ𝘽𝙤𝙩 𝙄𝙣𝙛𝙤ஜ▬▬▬▬▬⍟
+    const tmenu = `⍟▬▬▬ஜ𝘽𝙤𝙩 𝙄𝙣𝙛𝙤ஜ▬▬▬⍟
 
 » ｢ 𝐒𝐞𝐫𝐯𝐞𝐫 𝐈𝐧𝐟𝐨 ｣
  ➪ *Host* : _${os.hostname()}_
@@ -339,9 +350,53 @@ bot.action('etc', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋────✿
     
-❏ /truthid \`< The truth challenge ind >\`
-❏ /nulis \`< Write in books >\`
-❏ /tolol \`< Idiot certificate >\``,
+❏ /truthid 
+❏ /nulis 
+`,
+    {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'Back!🔙', callback_data: 'menu'}
+                ]
+            ]
+        },
+        parse_mode: "Markdown"
+    })
+})
+
+bot.action('stalk', (ctx) => {
+    ctx.deleteMessage()
+    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐒𝐭𝐚𝐥𝐤 𝐌𝐞𝐧𝐮 ⌋────✿
+    
+❏ /igstalk 
+❏ /githubstalk
+`,
+    {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'Back!🔙', callback_data: 'menu'}
+                ]
+            ]
+        },
+        parse_mode: "Markdown"
+    })
+})
+
+
+bot.action('textmaker', (ctx) => {
+    ctx.deleteMessage()
+    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐓𝐞𝐱𝐭 𝐌𝐚𝐤𝐞𝐫 ⌋────✿
+    
+❏ /bp 
+❏ /shadow 
+❏ /tolol
+❏ /codwarzone 
+❏ /coffe
+❏ /bannerlol 
+
+`,
     {
         reply_markup: {
             inline_keyboard: [
@@ -357,11 +412,14 @@ bot.action('etc', (ctx) => {
 bot.action('download', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐌𝐞𝐧𝐮 ⌋───✿
-    
-❏ /tiktok \`< Tiktok download NoWM >\`
-❏ /ytmp3 \`< Download ytmp3 >\`
-❏ /ytvideo \`< Download yt vIdeo >\`
-❏ /ytsearch \`< Search for youtube content >\`
+
+❏ /tiktok 
+❏ /tiktoknowm 
+❏ /ytmp3 
+❏ /ytvideo 
+❏ /ytsearch 
+❏ /xnxx 
+
 `,
     {
         reply_markup: {
@@ -379,8 +437,10 @@ bot.action('music', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐌𝐮𝐬𝐢𝐜 𝐌𝐞𝐧𝐮 ⌋───✿
     
-❏ /joox \`< Joox Music >\`
-❏ /play \`< Play music >\`
+❏ /joox 
+❏ /jooxplus 
+❏ /play 
+❏ /lyric 
 `,
     {
         reply_markup: {
@@ -398,12 +458,12 @@ bot.action('news', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿─────⌈ 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 𝐌𝐞𝐧𝐮 ⌋─────✿
     
-❏ /merdeka \`< Random news from merdeka.com >\`
-❏ /wikipedia \`< Information from wikipedia >\`
-❏ /gempa \`< Earthquake >\`
-❏ /corona \`< World corona information >\`
-❏ /coronaind \`< Indonesia corona information >\`
-❏ /pinterest \`< Random pinterest >\`
+❏ /merdeka 
+❏ /wikipedia 
+❏ /gempa 
+❏ /corona 
+❏ /coronaind 
+❏ /pinterest 
 `,
     {
         reply_markup: {
@@ -417,12 +477,47 @@ bot.action('news', (ctx) => {
     })
 })
 
-bot.action('nsfw', (ctx) => {
+bot.action('anime', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐍𝐬𝐟𝐰 𝐌𝐞𝐧𝐮 ⌋───✿
-    
-❏ /xnxx \`< Xnxx downloader >\`
-❏ /hentai \`< Random hentai >\`
+    bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐀𝐧𝐢𝐦𝐞 𝐌𝐞𝐧𝐮 ⌋──✿
+  
+❏ /animesearch 
+❏ /loli
+❏ /elf
+❏ /neko
+❏ /waifu
+❏ /husbu
+❏ /shota
+❏ /sagiri
+❏ /shinobu
+❏ /megumin
+❏ /wallnime
+❏ /yaoi
+❏ /ecchi
+❏ /ahegao
+❏ /hentai 
+❏ /nsfwloli 
+❏ /nsfwneko 
+`,
+    {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'Back!🔙', callback_data: 'menu'}
+                ]
+            ]
+        },
+        parse_mode: "Markdown"
+    })
+})
+
+bot.action('random', (ctx) => {
+    ctx.deleteMessage()
+    bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐑𝐚𝐧𝐝𝐨𝐦 𝐌𝐞𝐧𝐮 ⌋──✿
+  
+❏ /blackpink
+❏ /exo
+❏ /bts
 `,
     {
         reply_markup: {
@@ -543,18 +638,6 @@ bot.command('gempa', async (ctx) => {
         messageError(ctx)
     }
 })
-
-bot.command('hentai', async (ctx) => {
-        try{
-        sendsearch(ctx)
-        const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/waifu?apikey=${lolKey}`)
-        const data = link.data.result
-        ctx.replyWithPhoto({url: data}, {caption: `Random hentai`})
-        }catch(e){
-            messageError(ctx)
-        }
-})
-
 
             /* Other Fiture */
 
@@ -784,10 +867,192 @@ bot.command('joox', async (ctx) => {
         }
 })
 
+bot.command('lyric', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Harap masukan judul, Contoh /lyric see you again"
+        ctx.reply(message)
+    } else{
+        sendsearch(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        const linke = await axios.get(`http://lolhuman.herokuapp.com/api/lirik?apikey=${lolKey}&query=${messager}`)
+        const link = linke.data.result
+        if(!link){
+            ctx.reply(`Song not found!`)
+        }else{
+        ctx.reply(link)
+      }  }
+})
+
+bot.command('jooxplus', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Harap masukan judul, Contoh /jooxplus snowman"
+        ctx.reply(message)
+    } else{
+        sendsearch(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        const linke = await axios.get(`http://lolhuman.herokuapp.com/api/jooxplay?apikey=${lolKey}&query=${messager}`)
+        const link = linke.data.result
+        if(!link.image){
+            ctx.reply(`Song not found!`)
+        }else{
+        ctx.replyWithPhoto({ url: link.image}, { caption: `──────✿ 𝐉𝐨𝐨𝐱 ✿──────
+
+❖ Song: ${link.info.song}
+❖ Singer: ${link.info.singer}
+❖ Album: ${link.info.album}
+❖ Size: ${link.audio[2].size}
+❖ duration: ${link.info.duration}
+
+`}) 
+
+        await sleep(1000) 
+        ctx.reply(`❖ Lirik: ${link.lirik}`)
+        sendLoading(ctx)
+        ctx.replyWithAudio({ url: link.audio[2].link}, {thumb: link.image, album: link.info.album, artist: link.info.singer, duration: link.info.duration, title: link.info.song})
+        }
+    }
+})
+
+                /* Stalk Fiture */
+bot.command('githubstalk', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+
+    if(inputArray.length == 1){
+        message = "Example: /githubstalk paiiss" 
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            const link = await axios.get(`https://pencarikode.xyz/stalk/github?q=${messager}&apikey=${paisKey}`)
+            const data = link.data.result
+            ctx.replyWithPhoto({url: data.avatar_url}, {caption: `──────✿ 𝐒𝐭𝐚𝐥𝐤 ✿──────
+
+◈ User: ${data.username}
+◈ Name: ${data.name}
+◈ Id: ${data.id}
+◈ Url: ${data.url}
+◈ Type: ${data.type}
+◈ Company: ${data.company}
+◈ Blog: ${data.blog}
+◈ Location: ${data.location}
+◈ Email: ${data.email}
+◈ Bio: ${data.bio}
+◈ Twitter: ${data.twitter_username}
+◈ Repos: ${data.public_repos}
+◈ Follower: ${data.followers}
+◈ Following: ${data.following}
+◈ Create: ${data.created_at}
+
+`})
+        }catch{
+            ctx.reply(`Error!`)
+        }  
+    }
+})
+bot.command('igstalk', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+
+    if(inputArray.length == 1){
+        message = "Example: /igstalk fera_jelita" 
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+        const link = await axios.get(`https://pencarikode.xyz/stalk/instagram?username=${messager}&apikey=${paisKey}`)
+        const data = link.data.result.user
+        ctx.replyWithPhoto({url: data.hd_profile_pic_versions[0].url}, {caption: `──────✿ 𝐈𝐠𝐒𝐭𝐚𝐥𝐤 ✿──────
+        
+◈ UserName: ${data.username}
+◈ Name: ${data.full_name}
+◈ Verified: ${data.is_verified ? 'Yes' : 'No'}
+◈ Post: ${data.media_count}
+◈ Followers: ${data.follower_count}
+◈ Following: ${data.following_count}
+◈ Bio: ${data.biography}
+◈ Category: ${data.category ? `${data.category}` : null}
+◈ Url Bio: ${data.external_url ?  `${data.external_url}` : null }
+◈ Totoal Igtv: ${data.total_igtv_videos}
+◈ Business: ${data.is_business ? 'Yes' : 'No'}
+◈ WhatsApp: ${data.whatsapp_number ? `${data.whatsapp_number}` : null}
+
+`})
+        }catch{
+            ctx.reply(`User name Not Found/ User private account`)
+        }
+    }
+})
+
+
             /* Download Fiture */
 
+bot.command('facebook', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /facebook https://id-id.facebook.com/SamsungGulf/videos/video-bokeh/561108457758458/" 
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+        sendLoading(ctx)
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/facebook?apikey=${lolKey}&url=${messager}`)
+        const { result } = link.data
+        const hasil = result.slice(0, 5)
+        hasil.forEach(async(res) => {
+        if(res.type == "mp4"){
+            ctx.replyWithVideo({url: res.link})
+        }
+        })
+        }catch(e){
+        ctx.reply(`Link not found / wrong link!`)
+        }
+    }
+})
 
-bot.command('tiktok', async (ctx) => {
+bot.command('tiktokmusic', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /tiktokmusic https://www.tiktok.com/@baldybrobryzxz/video/6929750087862078721"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+        sendLoading(ctx)
+        ctx.replyWithAudio({url: `http://lolhuman.herokuapp.com/api/tiktokmusic?apikey=${lolKey}&url=${messager}`}, {title: 'Pais'})
+        }catch(e){
+            ctx.reply(`Link not found / wrong link!`)
+        }
+    }
+})
+
+bot.command('tiktoknowm', async (ctx) => {
     let input = ctx.message.text
     let inputArray = input.split(" ")
     let message = "";
@@ -802,13 +1067,32 @@ bot.command('tiktok', async (ctx) => {
         try{
         const linke = await axios.get(`http://lolhuman.herokuapp.com/api/tiktok?apikey=${lolKey}&url=${messager}`)
         const linko = linke.data.result
-        ctx.reply(`──────✿ 𝐓𝐢𝐤𝐭𝐨𝐤 ✿──────
+        await sleep(1000) 
+        sendLoading(ctx)
+        ctx.replyWithVideo({url: linko.link}, {caption: `──────✿ 𝐓𝐢𝐤𝐭𝐨𝐤 ✿──────
         
 ❖ Tiktok: ${linko.title}
-❖ Desc: ${linko.description}
+❖ Desc: ${linko.description}`})
+        }catch(e){
+            ctx.reply(`Video not found / wrong link!`)
+        }
+    }
+})
 
-❖ Note: Video is being sent`)
-        ctx.replyWithVideo({url: linko.link})
+bot.command('tiktok', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /tiktok https://www.tiktok.com/@baldybrobryzxz/video/6929750087862078721"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithVideo({url: `http://lolhuman.herokuapp.com/api/tiktokwm?apikey=${lolKey}&url=${messager}`})
         }catch(e){
             ctx.reply(`Video not found / wrong link!`)
         }
@@ -817,6 +1101,29 @@ bot.command('tiktok', async (ctx) => {
 
 
             // 18 ++++++ //
+
+bot.command('doujindesu', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter text, for example: /doujindesu https://doujindesu.info/2021/01/18/queen-bee-chapter-33/"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/doujindesu?apikey=${lolKey}&url=${messager}`)
+        const { result } = link.data
+        const hasil = result
+        result.forEach(async(res) => {
+        ctx.replyWithPhoto(res.image)
+        })
+        
+    }
+})
+
 bot.command('xnxx', async (ctx) => {
     let input = ctx.message.text
     let inputArray = input.split(" ")
@@ -847,6 +1154,7 @@ bot.command('xnxx', async (ctx) => {
 ❖ Desc: ${data.description}
         `})
         // console.log(data.link[2].link)
+        await sleep(1000) 
         sendLoading(ctx)
         ctx.replyWithVideo({url: data.link[1].link})
     }catch(e){
@@ -855,6 +1163,441 @@ bot.command('xnxx', async (ctx) => {
     }
 })
 
+            /* ANIME */
+
+bot.command('animesearch', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Enter the search, for example /animesearch sao"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+        const link = await axios.get (`http://lolhuman.herokuapp.com/api/anime?apikey=${lolKey}&query=${messager}`)
+        const data = link.data.result
+        ctx.replyWithPhoto({url: data.coverImage.large}, {caption: `─────✿ 𝐒𝐞𝐚𝐫𝐜𝐡 ✿─────
+
+◈ Title: ${data.title.english}
+◈ JPG: ${data.title.native}
+◈ Id: ${data.id}
+◈ Id Mal: ${data.idMal}
+◈ Episodes: ${data.episodes}
+◈ Format: ${data.format}
+◈ Duration: ${data.duration}
+◈ Season: ${data.season}
+◈ Status: ${data.status}
+◈ SeasonYear: ${data.seasonYear}
+◈ Source: ${data.source}
+◈ Genre: ${data.genres}
+◈ Start Date: 
+ - Year: ${data.startDate.year}
+ - Moth: ${data.startDate.month}
+ - Day: ${data.startDate.day} 
+◈ End Date
+ - Year: ${data.endDate.year}
+ - Moth: ${data.endDate.month}
+ - Day: ${data.endDate.day} 
+◈ Description: ${data.description.replace('<br><br>', '\n\n')}
+      `})
+        }catch{
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('hentai', async (ctx) => {
+        try{
+        sendsearch(ctx)
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/waifu?apikey=${lolKey}`)
+        const data = link.data.result
+        ctx.replyWithPhoto({url: data}, {caption: `Random hentai`})
+        }catch(e){
+            messageError(ctx)
+        }
+})
+
+bot.command('nsfwneko', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/neko?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Nsfw Neko`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('nsfwloli', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/random/nsfw/loli?apikey=${lolKey}`}, {caption: `Random Nsfw Loli`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('loli', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/loli?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Loli`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('elf', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/elf?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Elf`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('neko', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/neko?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Neko`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('waifu', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/waifu?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Waifu`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('shota', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/shota?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Shota`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+
+bot.command('husbu', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/husbu?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Husbu`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('sagiri', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`hhttp://lolhuman.herokuapp.com/api/random/sagiri?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Sagiri`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('shinobu', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/shinobu?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Shinobu`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('megumin', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/megumin?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Megumin`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+ 
+bot.command('fanart', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/art?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Fanart`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('wallnime', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/wallnime?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random WallNime`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('yaoi', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/random/nsfw/yaoi?apikey=${lolKey}`}, {caption: `Random Yaoi`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('ecchi', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/ecchi?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Ecchi`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('ahegao', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/ahegao?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Ahegao`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+
+        /* Random Fiture */
+
+bot.command('bts', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/bts?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Bts`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('exo', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/exo?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Exo   `})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+bot.command('blackpink', async (ctx) => {
+    try{
+    sendsearch(ctx)
+    const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/blackpink?apikey=${lolKey}`)
+    const data = link.data.result
+    ctx.replyWithPhoto({url: data}, {caption: `Random Blackpink`})
+    }catch(e){
+        messageError(ctx)
+    }
+})
+
+        /* Text Maker */
+
+bot.command('shadow', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /shadow paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/photooxy1/shadow?apikey=${lolKey}&text=${messager}`}, {caption: `Shadow ${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('bp', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /bp paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/textprome/blackpink?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('freefire', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /freefire paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/ephoto1/freefire?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('codwarzone', async (ctx) => {
+    let input = ctx.message.text  
+    const peak = input.trim().substring(input.indexOf(' ') + 1)
+    if (peak.length >= 2) {
+    const pais = peak.split(`|`)[0]
+    const gans = peak.split(`|`)[1]
+    if(!pais, !gans){
+        ctx.reply('Please enter text, for example: /codwarzone pais|gans')
+    }else{
+    sendProses(ctx)
+    ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/ephoto2/codwarzone?apikey=${lolKey}&text1=${pais}&text2=${gans}`})
+        }
+    }else{
+        ctx.reply(`Please enter a format like this, for example /codwarzone pais|gans`)
+    }
+})
+
+bot.command('goldb', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /goldb paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/ephoto1/goldplaybutton?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('silverb', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /silverb  paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/ephoto1/silverplaybutton?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('coffe', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /coffe  paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/photooxy1/coffe?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+bot.command('bannerlol', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /bannerlol  paiss"
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+            ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/photooxy3/bannerlol?apikey=${lolKey}&text=${messager}`})
+        }catch(e){
+            messageError(ctx)
+        }
+    }
+})
+
+
+bot.command('tes', async (ctx) => {
+    let input = ctx.message.text  
+    const peak = input.trim().substring(input.indexOf(' ') + 1)
+    if (peak.length >= 2) {
+    const pais = peak.split(`|`)[0]
+    const gans = peak.split(`|`)[1]
+    }
+})
 //ctx.reply(`err`)
 bot.launch()
 
