@@ -66,4 +66,5 @@ Edit the required value in `config.json`.
 * [`Telegraf`](https://www.npmjs.com/package/telegraf)
 * [`LolHuman`](https://github.com/LoL-Human/)
 * [`Puh dhil`](https://github.com/Dhil-J)
-* [`vhtear`](https://github.com/fckveza/)
+* [`vhtear`](https://github.com/fckveza/)'
+* [`Aldi`](https://github.com/Alphanum404)
