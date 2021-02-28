@@ -34,6 +34,11 @@ Edit the required value in `config.json`.
 }
 ```
 
+## Apikey
+* [Pais](https://pencarikode.xyz/)
+* [LolHuman](http://lolhuman.herokuapp.com/)
+* [VhTear](https://api.vhtear.com/)
+
 # Requirements
 * [Node.js](https://nodejs.org/en/)
 * [Git](https://git-scm.com/downloads)
