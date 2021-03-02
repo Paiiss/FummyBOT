@@ -8,6 +8,8 @@ const moment = require(`moment-timezone`)
 const speed = require(`performance-now`);
 const fs = require('fs');
 const { createGzip } = require('zlib');
+const imgToPDF = require('image-to-pdf');
+const imagesToPdf = require("images-to-pdf")
 
 // Load File
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
@@ -139,6 +141,7 @@ function sendMessageStart(ctx){
 
 ❖ *Note:* \`This bot is still under development, and for me to learn to make a bot\`
 
+- Req Fiture?, Chat pais
 ❖ ${tampilWaktu} Ind 🇮🇩
 
 ㅤㅤㅤㅤㅤㅤ╭∩╮ʕ•ᴥ•ʔ╭∩╮
@@ -1211,9 +1214,7 @@ bot.command('animesearch', async (ctx) => {
 bot.command('hentai', async (ctx) => {
         try{
         sendsearch(ctx)
-        const link = await axios.get(`http://lolhuman.herokuapp.com/api/random/nsfw/waifu?apikey=${lolKey}`)
-        const data = link.data.result
-        ctx.replyWithPhoto({url: data}, {caption: `Random hentai`})
+        ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/random/nsfw/waifu?apikey=${lolKey}`}, {caption: `Random hentai`})
         }catch(e){
             messageError(ctx)
         }
