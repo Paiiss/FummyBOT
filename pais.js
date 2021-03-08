@@ -8,8 +8,6 @@ const moment = require(`moment-timezone`)
 const speed = require(`performance-now`);
 const fs = require('fs');
 const { createGzip } = require('zlib');
-const imgToPDF = require('image-to-pdf');
-const imagesToPdf = require("images-to-pdf")
 
 // Load File
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
