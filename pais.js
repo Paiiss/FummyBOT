@@ -418,6 +418,7 @@ bot.action('download', (ctx) => {
 ❏ /ytvideo 
 ❏ /ytsearch 
 ❏ /xnxx 
+❏ /instagram
 
 `,
     {
@@ -1027,6 +1028,67 @@ bot.command('facebook', async (ctx) => {
         }catch(e){
         ctx.reply(`Link not found / wrong link!`)
         }
+    }
+})
+
+bot.command('twitter', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /twitter https://twitter.com/gofoodindonesia/status/1229369819511709697" 
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        try{
+        sendLoading(ctx)
+        const link = await axios.get(`http://lolhuman.herokuapp.com/api/twitter?apikey=${lolKey}&url=${messager}`)
+        const { result } = link.data
+        const hasil = result
+        ctx.replyWithVideo({url: result[0].link})
+        }catch(e){
+        ctx.reply(`Link not found / wrong link!`)
+        }
+    }
+})
+
+bot.command('instagram', async (ctx) => {
+    let input = ctx.message.text
+    let inputArray = input.split(" ")
+    let message = "";
+    
+    if(inputArray.length == 1){
+        message = "Please enter link, for example: /instagram https://www.instagram.com/p/CLSIkIOh0ad/?utm_source=ig_web_copy_link" 
+        ctx.reply(message)
+    } else{
+        sendProses(ctx)
+        inputArray.shift();
+        messager = inputArray.join(" ")
+        // console.log(messager)
+        // try{
+        sendLoading(ctx)
+        const link = await axios.get(`https://pencarikode.xyz/api/ig?url=${messager}&apikey=${paisKey}`)
+        const result = link.data.result.data
+        // const hasill = result
+        // console.log(result)
+        result.forEach((res) => {
+            
+        // console.log(hasil)
+        if(res.type == 'image'){
+        ctx.replyWithPhoto({url: res.data})
+
+        } else {
+            console.log('video')
+            ctx.replyWithVideo({url: res.data})
+        }
+        
+        })
+        // }catch(e){
+        // ctx.reply(`Link not found / wrong link!`)
+        // }
     }
 })
 
