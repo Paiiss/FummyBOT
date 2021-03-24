@@ -17,6 +17,8 @@ let {
     paisKey,
     lolKey,
     vhKey,
+    prefix,
+    ownerbot
 } = setting
 
             /* Bot */
@@ -106,6 +108,7 @@ function sendMessageStart(ctx){
         var jam = date.getHours();
         var menit = date.getMinutes();
         var detik = date.getSeconds();
+        var waktoo = date.getHours();
             switch(hari) {
                 case 0: hari = "Minggu"; break;
                 case 1: hari = "Senin"; break;
@@ -129,18 +132,46 @@ function sendMessageStart(ctx){
                 case 10: bulan1 = "November"; break;
                 case 11: bulan1 = "Desember"; break;
             }
+            switch(waktoo){
+                case 0: waktoo = "Tengah Malam🌚 "; break;
+                case 1: waktoo = "Tengah Malam🌒 "; break;
+                case 2: waktoo = "Dini Hari🌒 "; break;
+                case 3: waktoo = "Dini Hari🌓 "; break;
+                case 4: waktoo = "Subuh🌔 "; break;
+                case 5: waktoo = "Subuh🌔 "; break;
+                case 6: waktoo = "Pagi🌝 "; break;
+                case 7: waktoo = "Pagi🌝 "; break;
+                case 8: waktoo = "Pagi🌝 "; break;
+                case 9: waktoo = "Pagi  "; break;
+                case 10: waktoo = "Pagi🌞 "; break;
+                case 11: waktoo = "Siang🌞 "; break;
+                case 12: waktoo = "Siang🌞 "; break;
+                case 13: waktoo = "Siang🌞 "; break;
+                case 14: waktoo = "Siang🌞 "; break;
+                case 15: waktoo = "Sore🌝 "; break;
+                case 16: waktoo = "Sore🌝 "; break;
+                case 17: waktoo = "Sore🌖 "; break;
+                case 18: waktoo = "Magrib🌘 "; break;
+                case 19: waktoo = "Magrib🌚 "; break;
+                case 20: waktoo = "Malam🌚 "; break;
+                case 21: waktoo = "Malam🌚 "; break;
+                case 22: waktoo = "Malam🌚 "; break;
+                case 23: waktoo = "Tengah Malam🌚 "; break;
+            }
             var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
-            var tampilWaktu = "*Time :* " + jam + ":" + menit + ":" + detik + " Wib⌚";
+            var tampilWaktu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib⌚";
     const tm = `●▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬●
 
 ❖ Name : *${ctx.botInfo.first_name}*
-❖ Version : \`1.0.0\`
+❖ Version : \`2.0.0\`
 ❖ Owner : *Pais*
 
 ❖ *Note:* \`This bot is still under development, and for me to learn to make a bot\`
 
 - Req Fiture?, Chat pais
-❖ ${tampilWaktu} Ind 🇮🇩
+
+❖ ${tampilTanggal}
+❖ ${tampilWaktu}
 
 ㅤㅤㅤㅤㅤㅤ╭∩╮ʕ•ᴥ•ʔ╭∩╮
 ㅤㅤㅤㅤㅤㅤㅤㅤ@𝓟𝓪𝓲𝓼
@@ -227,6 +258,8 @@ Very Thanks for Your donation. 😁
 }
 function sendMessageMenu(ctx){
     const tmenu = `●▬▬▬ஜ𝐌𝐞𝐧𝐮ஜ▬▬▬●
+
+Bot menu by: ${ownerbot}💞
 
 Select one of the blocks below:
 ` 
@@ -351,6 +384,9 @@ bot.action('etc', (ctx) => {
     
 ❏ /truthid 
 ❏ /nulis 
+❏ ${prefix}nickml
+❏ ${prefix}short
+❏ ${prefix}spam1
 `,
     {
         reply_markup: {
@@ -1657,6 +1693,117 @@ bot.command('tes', async (ctx) => {
     const gans = peak.split(`|`)[1]
     }
 })
+
+bot.on('text', async pais => {
+    
+    let body = pais.update.message.text || ''
+    const command = body.split(' ')[0]
+    const isCmd = body.startsWith('/')
+    const arg = body.slice(command.length + 1)
+    const arg1 = arg.split(`|`)[0]
+    const arg2 = arg.split(`|`)[1]
+    const arg3 = arg.split(`|`)[2]
+
+    switch(command){
+
+        /* Text Maker */
+
+    case prefix + 'maker':
+        const ava = `\nAvailable themes:
+
+❏ bp
+❏ matrix
+❏ ph
+❏ cristmas
+❏ winter
+❏ sky
+❏ sandwriting
+❏ 1917
+❏ marvel
+❏ marvel2`
+        if(arg1 == 'theme'){
+            return pais.reply(`Please fill in the '(theme)' with the available themes\n${ava}`)
+        }
+        switch(arg1){
+            case 'bp': themeurl = `https://pencarikode.xyz/api/textpro/blackpink?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'matrix': themeurl = `https://pencarikode.xyz/api/textpro/matrix?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'ph': themeurl = `https://pencarikode.xyz/api/textpro/phub?text=${arg2}2&text2=${arg3}&apikey=${paisKey}`; total = 3; break;
+            case 'christmas': themeurl = `https://pencarikode.xyz/api/textpro/christmas?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'winter': themeurl = `https://pencarikode.xyz/api/textpro/winter?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'sky': themeurl = `https://pencarikode.xyz/api/textpro/sky?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'sandwriting': themeurl = `https://pencarikode.xyz/api/textpro/sand-writing?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case '1917': themeurl = `https://pencarikode.xyz/api/textpro/1917-style?text=${arg2}&apikey=${paisKey}`; total = 1; break;
+            case 'marvel': themeurl = `https://pencarikode.xyz/api/textpro/marvel-studios?text=${arg2}&text2=${arg3}&apikey=${paisKey}`; total = 2; break;
+            case 'marvel2': themeurl = `https://pencarikode.xyz/api/textpro/marvel-studios2?text=${arg2}&text2=${arg3}&apikey=${paisKey}`; total = 2; break;
+
+            // case '': themeurl = ``; total = 1; break;
+
+            default:
+            return pais.reply(`Theme not found\n\nPlease enter text, for example: ${prefix}maker (theme)|Pais\n${ava}`)
+        }
+        
+
+        if( total == 1) {
+            if(!arg2)return pais.reply(`Please enter text, for example: ${prefix}maker ${arg1}|Pais`)
+        }else {
+             if(!arg2, !arg3) return pais.reply(`Please enter text, for example: ${prefix}maker ${arg1}|Pais|gans`)
+        }
+        // } else {
+        //     if(!arg2, !arg3)pais.reply(`Please enter text, for example: ${prefix}maker ${arg1}|Pais|gans`)
+        // }
+        pais.replyWithPhoto(themeurl)
+
+        break
+    case prefix + 'spam1':
+        if(!arg) return pais.reply(`Please input number phone`)
+        try{
+            const linkspam = await axios.get(`http://api.lolhuman.xyz/api/sms/spam1?apikey=${lolKey}&nomor=${arg}`)
+            console.log('Sukses mengirim spam ke nomor '+ arg)
+            pais.reply(`Successfully sent spam to number ${arg}🤝🏻`)
+        } catch(e){
+            console.log('Gagal mengirim spam ke nomor '+ arg)
+            pais.reply(`Failed to spam number ${arg} 😔`)
+        }
+        break
+    case prefix + 'short':
+        if(!arg) return pais.reply(`Please enter the link, for example /short https://pencarikode.xyz`)
+        try{
+            const link = await axios.get (`http://api.lolhuman.xyz/api/shortlink?apikey=${lolKey}&url=${arg}`)
+            const url = link.data.result
+            console.log(`Succes short url: ${url}`)
+            pais.reply(`Short url: ${url}`)
+        } catch(e){
+            console.log(`Error Short ${arg}`)
+            pais.reply(`Error Short ${arg}`)
+        }
+        break
+    case prefix + 'mlnick': 
+        if(!arg1, !arg2) return pais.reply(`Please input the format correctly, for example: ${prefix}mlnick 348553128|9436`)
+        try{
+            const link = await axios.get(`http://api.lolhuman.xyz/api/mobilelegend/${arg1}/${arg2}?apikey=${lolKey}`)
+            const data = link.data.result
+            console.log(`Succses nick: ${data}`)
+            pais.reply(`Nick: ${data}`)
+        } catch(e){
+            pais.reply(`Something went wrong`)
+            console.log(`nickml error!`)
+        }
+        break    
+    case prefix + 'trump':
+        if(!arg) return pais.reply(`Please enter text, for example: ${prefix}thump pais gans`)
+        try{
+            pais.replyWithPhoto(`http://api.lolhuman.xyz/api/tweettrump?apikey=${lolKey}&text=${arg}`)
+            pais.reply(`Succes to create`)
+        }catch(e){
+            pais.reply(`Failed to create`)
+            console.log(`Fitur trump Error!`)
+        }
+        break
+    
+
+    }
+    })
+
 //ctx.reply(`err`)
 bot.launch()
 
