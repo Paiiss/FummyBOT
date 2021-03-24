@@ -2,5 +2,6 @@
     "Token": "Token lu asw",
     "paisKey": "Fummy",
     "lolKey": "Apikey",
-    "vhKey": "Apikey" 
+    "vhKey": "Apikey",
+    "prefix": "/"
 }
