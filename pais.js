@@ -431,6 +431,8 @@ bot.action('textmaker', (ctx) => {
 ❏ /coffe
 ❏ /bannerlol 
 
+❏ /maker ( Read how to use )
+
 `,
     {
         reply_markup: {
