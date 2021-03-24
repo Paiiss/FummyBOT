@@ -3,5 +3,6 @@
     "paisKey": "Fummy",
     "lolKey": "Apikey",
     "vhKey": "Apikey",
-    "prefix": "/"
+    "prefix": "/",
+    "ownerbot": "Pais"
 }
