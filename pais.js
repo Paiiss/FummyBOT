@@ -8,6 +8,7 @@ const moment = require(`moment-timezone`)
 const speed = require(`performance-now`);
 const fs = require('fs');
 const { createGzip } = require('zlib');
+const { spawn, exec } = require('child_process')
 
 // Load File
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
@@ -160,7 +161,7 @@ function sendMessageStart(ctx){
             }
             var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
             var tampilWaktu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib";
-            
+
     // Credit ny jgn di ilangin ya ^_^
 
     const tm = `●▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬●
@@ -459,6 +460,8 @@ bot.action('textmaker', (ctx) => {
 ❏ ${prefix}ttp3
 ❏ ${prefix}ttp4
 
+❏ ${prefix}harta
+
 `,
     {
         reply_markup: {
@@ -705,7 +708,7 @@ bot.command('gempa', async (ctx) => {
 
             /* Other Fiture */
 
-bot.command('nulis', async (ctx) => {
+bot.command('nulif', async (ctx) => {
     let input = ctx.message.text
     let inputArray = input.split(" ")
     let message = "";
@@ -1888,6 +1891,70 @@ bot.on('text', async pais => {
         }
         break
 
+    case prefix + 'nulis':
+            const diTulis = `Website tidak hanya soal konten saja. Jika ingin menjadi webmaster, ada sejumlah hal yang harus Anda pahami, seperti apa itu AJAX. AJAX adalah sebuah singkatan dari Asynchronous Javascript and XML dan mengacu pada sekumpulan teknis pengembangan web (web development) yang memungkinkan aplikasi web untuk bekerja secara asynchronous (tidak langsung) – memproses setiap request (permintaan) yang datang ke server di sisi background. Agar lebih memahami apa itu AJAX, kami akan membahas terminologinya satu per satu.
+
+JavaScript merupakan bahasa coding yang kerap digunakan. Salah satu fungsinya adalah untuk mengelola konten dinamis website dan memungkinkan interaksi user yang dinamis. Layaknya HTML, XML atau eXtensible Markup Language adalah varian lain dari bahasa markup. Jika HTML dirancang untuk menampilkan data, maka XML dirancang untuk memuat dan membawa data.
+
+Baik JavaScript maupun XML bekerja secara asynchronous di dalam AJAX. Alhasil, aplikasi web yang menggunakan AJAX dapat mengirimkan dan menerima data dari server tanpa harus mereload`
+            const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
+            const panjangBaris = panjangKalimat.split('\n').slice(0, 28).join('\n')
+            // console.log(panjangBaris)
+            spawn('convert', [
+                './data/result.jpg',
+                '-font',
+                './data/font.ttf',
+                '-size',
+                '1024x784',
+                '-pointsize',
+                '20',
+                '-interline-spacing',
+                '-7.5',
+                '-annotate',
+                '+344+142',
+                panjangBaris,
+                './data/pais/sipa.jpg'
+            ])
+            .on('error', () => pais.reply(`Error`))
+            .on('exit', () => {
+                // pais.replyWithPhoto('./data/pais/sipa.jpg')
+                pais.replyWithPhoto({source: fs.createReadStream('./data/pais/sipa.jpg')})
+
+            })
+            break
+    case prefix + `harta`:
+            if(!arg) return pais.reply(`Please input text, Example: ${prefix}harta pais`)
+            const textsss = arg
+            const splitText = textsss.replace(/(\S+\s*){1,10}/g, `$&\n`)
+            const fixHeight = splitText.toUpperCase() 
+            const bglu = ['harta', 'harta2', 'harta3']
+            const bg = bglu[Math.floor(Math.random() * bglu.length)]
+            spawn(`convert`, [
+                `-gravity`,
+                `Center`,
+                `-size`,
+                `1280x1280`,
+                `xc:black`,
+                `-font`,
+                `./data/harta.ttf`,
+                `-pointsize`,
+                `200`,
+                `-tile`,
+                `./data/${bg}.jpg`,
+                `-annotate`,
+                `+20+80`,
+                fixHeight,
+                `-wave`,
+                `10x175`,
+               `-crop`,
+                `1000x850+0+0`,
+                `./data/pais/${bg}.jpg`
+            ])
+            .on(`error`, () => pais.reply(from, `Error gan`, id))
+            .on(`exit`, () => {
+                pais.replyWithPhoto({source: fs.createReadStream(`./data/pais/${bg}.jpg`)})
+            })
+            break
 
     }
     })
