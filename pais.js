@@ -10,7 +10,7 @@ const fs = require('fs');
 const { createGzip } = require('zlib');
 const { spawn, exec } = require('child_process')
 
-// Load File
+// Load Filef
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
 
 let {
@@ -304,6 +304,9 @@ Select one of the blocks below:
                     { text: 'Random Menu🔫', callback_data: 'random'}
                 ],
                 [
+                    { text: 'Nulis Menu📠', callback_data: 'nulis'}
+                ],
+                [
                     { text: 'Back!🔙', callback_data: 'start'}
                 ]
             ]
@@ -397,13 +400,33 @@ bot.command('menu', (ctx) => {
 })
 
             /* Di atas yg make func */
+bot.action('nulis', (ctx) => {
+    ctx.deleteMessage()
+    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐍𝐮𝐥𝐢𝐬 𝐌𝐞𝐧𝐮 ⌋────✿
+    
+❏ ${prefix}nulis 
+❏ ${prefix}nulis2 
+❏ ${prefix}mager
+
+
+`,
+    {
+        reply_markup: {
+            inline_keyboard: [
+                [
+                    { text: 'Back!🔙', callback_data: 'menu'}
+                ]
+            ]
+        },
+        parse_mode: "Markdown"
+    })
+})
 
 bot.action('etc', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋────✿
     
-
-    {prefix}truthid 
+❏${prefix}truthid 
 ❏ ${prefix}nulis 
 ❏ ${prefix}nickml
 ❏ ${prefix}short
@@ -708,21 +731,6 @@ bot.command('gempa', async (ctx) => {
 
             /* Other Fiture */
 
-bot.command('nulif', async (ctx) => {
-    let input = ctx.message.text
-    let inputArray = input.split(" ")
-    let message = "";
-    
-    if(inputArray.length == 1){
-        message = "Please enter text, for example: /nulis pais"
-        ctx.reply(message)
-    } else{
-        sendProses(ctx)
-        inputArray.shift();
-        messager = inputArray.join(" ")
-        ctx.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/nulis?apikey=${lolKey}&text=${messager}`})
-    }
-})
 bot.command('tolol', async (ctx) => {
         let input = ctx.message.text
         let inputArray = input.split(" ")
@@ -1891,24 +1899,24 @@ bot.on('text', async pais => {
         }
         break
 
-    case prefix + 'nulis':
+    case prefix + 'nulis'://By Mfarels
             if(!arg) return pais.reply(`Please input text, Example: ${prefix}nulis pais anak yang baik`)
             const diTulis = arg
             // const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
             // const panjangBaris = panjangKalimat.split('\n').slice(0, 28).join('\n')
             const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
-                let Textpanjang = ''
-lengthtext = 1
-console.log(panjangKalimat)
- for (var i = 0; i < panjangKalimat.length; i++) { 
- if (i == 55*lengthtext){
-     Textpanjang+= '\n'
-     lengthtext++
-      Textpanjang+= panjangKalimat[i]
-   } else {
-     Textpanjang+= panjangKalimat[i]
- }
- }
+            let Textpanjang = ''
+            lengthtext = 1
+            // console.log(panjangKalimat)
+            for (var i = 0; i < panjangKalimat.length; i++) { 
+            if (i == 55*lengthtext){
+            Textpanjang+= '\n'
+            lengthtext++
+            Textpanjang+= panjangKalimat[i]
+            } else {
+            Textpanjang+= panjangKalimat[i]
+            }
+        }
             // console.log(panjangBaris)
             spawn('convert', [
                 './data/result.jpg',
@@ -1932,7 +1940,116 @@ console.log(panjangKalimat)
 
             })
             break
-    case prefix + `harta`:
+    case '/mager'://By Mfarels
+                if(!arg1) return pais.reply(`Please input Name, Example: ${prefix}mager pais|Class|Text`)
+                if(!arg2) return pais.reply(`Please input Class, Example: ${prefix}mager ${arg1}|XI|Text`)
+                if(!arg3) return pais.reply(`Please input Text, Example: ${prefix}mager ${arg1}|${arg2}|Text`)
+                const diNama = `Name: ${arg1}`
+                const diKelas = `Kelas: ${arg2}`
+                const diTulis7 = arg3
+                const panjangKalimat7 = diTulis7.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangNama = diNama.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangKelas = diKelas.replace(/(\S+\s*){1,10}/g, '$&\n')
+                const panjangBarisNama = panjangNama.split('\n').slice(0, 30).join('\n')
+                const panjangBarisKelas = panjangKelas.split('\n').slice(0, 30).join('\n')
+                var months = ['- 1 -', '- 2 -', '- 3 -', '- 4 -', '- 5 -', '- 6 -', '- 7 -', '- 8 -', '- 9 -', '- 10 -', '- 11 -', '- 12 -'];
+                var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+                var date = new Date();
+                var day = date.getDate();
+                var month = date.getMonth();
+                var thisDay = date.getDay(),
+                    thisDay = myDays[thisDay];
+                var yy = date.getYear();
+                var year = (yy < 1000) ? yy + 1900 : yy;
+                const waktu4 = (day + ' ' + months[month] + ' ' + year)
+                const hari4 = (thisDay)
+                let Textpanjang1 = ''
+                lengthtext = 1
+                console.log(panjangKalimat7)
+                for (var i = 0; i < panjangKalimat7.length; i++) { 
+                if (i == 60*lengthtext){
+                Textpanjang1+= '\n'
+                lengthtext++
+                Textpanjang1+= panjangKalimat7[i]
+                } else {
+                Textpanjang1+= panjangKalimat7[i]
+                }
+                }
+                spawn('convert', [
+                    './data/result.jpg',
+                    '-font',
+                    './data/font.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '20',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+806+78',
+                    hari4,
+                    '-font',
+                    './data/font.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+806+102',
+                    waktu4,
+                    '-font',
+                    './data/font.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+360+100',
+                    panjangBarisNama,
+                    '-font',
+                    './data/font.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '18',
+                    '-interline-spacing',
+                    '1',
+                    '-annotate',
+                    '+360+120',
+                    panjangBarisKelas, 
+                    '-font',
+                    './data/font.ttf',
+                    '-size',
+                    '1024x784',
+                    '-pointsize',
+                    '20',
+                    '-interline-spacing',
+                    '-7.5',
+                    '-annotate',
+                    '+344+142',
+                    Textpanjang1,
+                    './data/pais/sipa.jpg'
+                ])
+                .on('error', () => pais.reply('Error Bjeer, Keknya Scriptnya Lagi Error'))
+                .on('exit', () => {
+                    pais.replyWithPhoto({source: fs.createReadStream('./data/pais/sipa.jpg')})
+
+                })
+            break
+    case prefix + 'nulis2':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}nulis2 pais sangat ganteng`)
+        try{
+            pais.replyWithPhoto({url: `http://lolhuman.herokuapp.com/api/nulis?apikey=${lolKey}&text=${arg}`})
+        }catch(e){
+            console.log(`Nulis2 error!`)
+            pais.reply(`Error, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + `harta`://By Mfarels
             if(!arg) return pais.reply(`Please input text, Example: ${prefix}harta pais`)
             const textsss = arg
             const splitText = textsss.replace(/(\S+\s*){1,10}/g, `$&\n`)
