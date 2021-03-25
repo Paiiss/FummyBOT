@@ -159,25 +159,43 @@ function sendMessageStart(ctx){
                 case 23: waktoo = "Tengah Malam🌚 "; break;
             }
             var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
-            var tampilWaktu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib⌚";
+            var tampilWaktu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib";
+            
+    // Credit ny jgn di ilangin ya ^_^
+
     const tm = `●▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬●
 
-❖ Name : *${ctx.botInfo.first_name}*
+❖ NameBot : *${ctx.botInfo.first_name}*
 ❖ Version : \`2.0.0\`
-❖ Owner : *Pais*
+❖ Owner : *${ownerbot}*
 
-❖ *Note:* \`This bot is still under development, and for me to learn to make a bot\`
-
-- Req Fiture?, Chat pais
+- * Req Fiture?, Chat* [pais](http://t.me/Paiisse)
 
 ❖ ${tampilTanggal}
 ❖ ${tampilWaktu}
+
+❖ *Note:* \`This bot script is open source, link:\` [FummyBOT](https://github.com/Paiiss/FummyBOT) by [PAIS](http://t.me/Paiisse)
+
+❖ Thanks to: 
+- Pais
+- Lolhum
+- Ben
+- Aldi :v
+- And my friends
+
+❖ Rest-api in use:
+- [Pais-Api](http://pencarikode.xyz/)
+- [Lolhuman](http://api.lolhuman.xyz/)
+- [Vhtear](https://vhtear.com/)
+- [ZeksApi](https://api.zeks.xyz/)
+
 
 ㅤㅤㅤㅤㅤㅤ╭∩╮ʕ•ᴥ•ʔ╭∩╮
 ㅤㅤㅤㅤㅤㅤㅤㅤ@𝓟𝓪𝓲𝓼
 ㅤㅤㅤㅤㅤㅤㅤ⌤⌤⌤⌤⌤
 `
-    // console.log(ctx)
+        
+    // Credit ny jgn di ilangin ya ^_^
     bot.telegram.sendMessage(ctx.chat.id, tm,
     {
         reply_markup: {
@@ -193,7 +211,8 @@ function sendMessageStart(ctx){
                 ]
             ]
         },
-        parse_mode: "Markdown"
+        parse_mode: "Markdown",
+        disable_web_page_preview: "true" 
     })
 }
 
@@ -382,11 +401,13 @@ bot.action('etc', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋────✿
     
-❏ /truthid 
-❏ /nulis 
+
+    {prefix}truthid 
+❏ ${prefix}nulis 
 ❏ ${prefix}nickml
 ❏ ${prefix}short
 ❏ ${prefix}spam1
+❏ ${prefix}artinama
 `,
     {
         reply_markup: {
@@ -404,8 +425,8 @@ bot.action('stalk', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐒𝐭𝐚𝐥𝐤 𝐌𝐞𝐧𝐮 ⌋────✿
     
-❏ /igstalk 
-❏ /githubstalk
+❏ ${prefix}igstalk 
+❏ ${prefix}githubstalk
 `,
     {
         reply_markup: {
@@ -424,14 +445,19 @@ bot.action('textmaker', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐓𝐞𝐱𝐭 𝐌𝐚𝐤𝐞𝐫 ⌋────✿
     
-❏ /bp 
-❏ /shadow 
-❏ /tolol
-❏ /codwarzone 
-❏ /coffe
-❏ /bannerlol 
+❏ ${prefix}bp 
+❏ ${prefix}shadow 
+❏ ${prefix}tolol
+❏ ${prefix}codwarzone 
+❏ ${prefix}coffe
+❏ ${prefix}bannerlol 
 
-❏ /maker ( Read how to use )
+❏ ${prefix}maker ( Read how to use )
+
+❏ ${prefix}ttp
+❏ ${prefix}ttp2
+❏ ${prefix}ttp3
+❏ ${prefix}ttp4
 
 `,
     {
@@ -450,13 +476,13 @@ bot.action('download', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐌𝐞𝐧𝐮 ⌋───✿
 
-❏ /tiktok 
-❏ /tiktoknowm 
-❏ /ytmp3 
-❏ /ytvideo 
-❏ /ytsearch 
-❏ /xnxx 
-❏ /instagram
+❏ ${prefix}tiktok 
+❏ ${prefix}tiktoknowm 
+❏ ${prefix}ytmp3 
+❏ ${prefix}ytvideo 
+❏ ${prefix}ytsearch 
+❏ ${prefix}xnxx 
+❏ ${prefix}instagram
 
 `,
     {
@@ -475,10 +501,10 @@ bot.action('music', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐌𝐮𝐬𝐢𝐜 𝐌𝐞𝐧𝐮 ⌋───✿
     
-❏ /joox 
-❏ /jooxplus 
-❏ /play 
-❏ /lyric 
+❏ ${prefix}joox 
+❏ ${prefix}jooxplus 
+❏ ${prefix}play 
+❏ ${prefix}lyric 
 `,
     {
         reply_markup: {
@@ -496,12 +522,12 @@ bot.action('news', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿─────⌈ 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 𝐌𝐞𝐧𝐮 ⌋─────✿
     
-❏ /merdeka 
-❏ /wikipedia 
-❏ /gempa 
-❏ /corona 
-❏ /coronaind 
-❏ /pinterest 
+❏ ${prefix}merdeka 
+❏ ${prefix}wikipedia 
+❏ ${prefix}gempa 
+❏ ${prefix}corona 
+❏ ${prefix}coronaind 
+❏ ${prefix}pinterest 
 `,
     {
         reply_markup: {
@@ -519,23 +545,23 @@ bot.action('anime', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐀𝐧𝐢𝐦𝐞 𝐌𝐞𝐧𝐮 ⌋──✿
   
-❏ /animesearch 
-❏ /loli
-❏ /elf
-❏ /neko
-❏ /waifu
-❏ /husbu
-❏ /shota
-❏ /sagiri
-❏ /shinobu
-❏ /megumin
-❏ /wallnime
-❏ /yaoi
-❏ /ecchi
-❏ /ahegao
-❏ /hentai 
-❏ /nsfwloli 
-❏ /nsfwneko 
+❏ ${prefix}animesearch 
+❏ ${prefix}loli
+❏ ${prefix}elf
+❏ ${prefix}neko
+❏ ${prefix}waifu
+❏ ${prefix}husbu
+❏ ${prefix}shota
+❏ ${prefix}sagiri
+❏ ${prefix}shinobu
+❏ ${prefix}megumin
+❏ ${prefix}wallnime
+❏ ${prefix}yaoi
+❏ ${prefix}ecchi
+❏ ${prefix}ahegao
+❏ ${prefix}hentai 
+❏ ${prefix}nsfwloli 
+❏ ${prefix}nsfwneko 
 `,
     {
         reply_markup: {
@@ -553,9 +579,9 @@ bot.action('random', (ctx) => {
     ctx.deleteMessage()
     bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐑𝐚𝐧𝐝𝐨𝐦 𝐌𝐞𝐧𝐮 ⌋──✿
   
-❏ /blackpink
-❏ /exo
-❏ /bts
+❏ ${prefix}blackpink
+❏ ${prefix}exo
+❏ ${prefix}bts
 `,
     {
         reply_markup: {
@@ -1708,6 +1734,55 @@ bot.on('text', async pais => {
 
     switch(command){
 
+    case prefix + 'spam1':
+        if(!arg) return pais.reply(`Please input number phone`)
+        try{
+            linkspam = await axios.get(`http://api.lolhuman.xyz/api/sms/spam1?apikey=${lolKey}&nomor=${arg}`)
+            console.log('Sukses mengirim spam ke nomor '+ arg)
+            pais.reply(`Successfully sent spam to number ${arg}🤝🏻`)
+        } catch(e){
+            console.log('Gagal mengirim spam ke nomor '+ arg)
+            pais.reply(`Failed to spam number ${arg} 😔`)
+        }
+        break
+    case prefix + 'short':
+        if(!arg) return pais.reply(`Please enter the link, for example /short https://pencarikode.xyz`)
+        try{
+            link = await axios.get (`http://api.lolhuman.xyz/api/shortlink?apikey=${lolKey}&url=${arg}`)
+            url = link.data.result
+            console.log(`Succes short url: ${url}`)
+            pais.reply(`Short url: ${url}`)
+        } catch(e){
+            console.log(`Error Short ${arg}`)
+            pais.reply(`Error Short ${arg}`)
+        }
+        break
+    case prefix + 'mlnick': 
+        if(!arg1, !arg2) return pais.reply(`Please input the format correctly, for example: ${prefix}mlnick 348553128|9436`)
+        try{
+            link = await axios.get(`http://api.lolhuman.xyz/api/mobilelegend/${arg1}/${arg2}?apikey=${lolKey}`)
+            data = link.data.result
+            console.log(`Succses nick: ${data}`)
+            pais.reply(`Nick: ${data}`)
+        } catch(e){
+            pais.reply(`Something went wrong`)
+            console.log(`nickml error!`)
+        }
+        break    
+    case prefix + 'artinama':
+        if(!arg) return pais.reply(`Please inpun name, Example: ${prefix}artinama pais`)
+        try{
+            link = await axios.get(`http://api.lolhuman.xyz/api/artinama?apikey=${lolKey}&nama=${arg}`)
+            data = link.data.result
+        pais.reply(data)
+        } catch(e){
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+            console.log(`Error artinama`)
+        }
+        break
+
+        /* Image Maker */
+
         /* Text Maker */
 
     case prefix + 'maker':
@@ -1742,6 +1817,7 @@ bot.on('text', async pais => {
 
             default:
             return pais.reply(`Theme not found\n\nPlease enter text, for example: ${prefix}maker (theme)|Pais\n${ava}`)
+            
         }
         
 
@@ -1756,41 +1832,6 @@ bot.on('text', async pais => {
         pais.replyWithPhoto(themeurl)
 
         break
-    case prefix + 'spam1':
-        if(!arg) return pais.reply(`Please input number phone`)
-        try{
-            const linkspam = await axios.get(`http://api.lolhuman.xyz/api/sms/spam1?apikey=${lolKey}&nomor=${arg}`)
-            console.log('Sukses mengirim spam ke nomor '+ arg)
-            pais.reply(`Successfully sent spam to number ${arg}🤝🏻`)
-        } catch(e){
-            console.log('Gagal mengirim spam ke nomor '+ arg)
-            pais.reply(`Failed to spam number ${arg} 😔`)
-        }
-        break
-    case prefix + 'short':
-        if(!arg) return pais.reply(`Please enter the link, for example /short https://pencarikode.xyz`)
-        try{
-            const link = await axios.get (`http://api.lolhuman.xyz/api/shortlink?apikey=${lolKey}&url=${arg}`)
-            const url = link.data.result
-            console.log(`Succes short url: ${url}`)
-            pais.reply(`Short url: ${url}`)
-        } catch(e){
-            console.log(`Error Short ${arg}`)
-            pais.reply(`Error Short ${arg}`)
-        }
-        break
-    case prefix + 'mlnick': 
-        if(!arg1, !arg2) return pais.reply(`Please input the format correctly, for example: ${prefix}mlnick 348553128|9436`)
-        try{
-            const link = await axios.get(`http://api.lolhuman.xyz/api/mobilelegend/${arg1}/${arg2}?apikey=${lolKey}`)
-            const data = link.data.result
-            console.log(`Succses nick: ${data}`)
-            pais.reply(`Nick: ${data}`)
-        } catch(e){
-            pais.reply(`Something went wrong`)
-            console.log(`nickml error!`)
-        }
-        break    
     case prefix + 'trump':
         if(!arg) return pais.reply(`Please enter text, for example: ${prefix}thump pais gans`)
         try{
@@ -1801,7 +1842,52 @@ bot.on('text', async pais => {
             console.log(`Fitur trump Error!`)
         }
         break
-    
+    case prefix + 'ttp':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}ttp pais`)
+        try{
+        pais.replyWithSticker({url: `http://api.lolhuman.xyz/api/ttp?apikey=${lolKey}&text=${arg}`})
+        } catch(e){
+            console.log('Error ttp1')
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + 'ttp2':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}ttp2 pais`)
+        try{
+        pais.replyWithSticker({url: `http://api.lolhuman.xyz/api/ttp2?apikey=${lolKey}&text=${arg}`})
+        } catch(e){
+            console.log('Error ttp2')
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + 'ttp3':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}ttp3 pais`)
+        try{
+        pais.replyWithSticker({url: `http://api.lolhuman.xyz/api/ttp3?apikey=${lolKey}&text=${arg}`})
+        } catch(e){
+            console.log('Error ttp3')
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + 'ttp4':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}ttp4 pais`)
+        try{
+        pais.replyWithSticker({url: `http://api.lolhuman.xyz/api/ttp3?apikey=${lolKey}&text=${arg}`})
+        } catch(e){
+            console.log('Error ttp4')
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + 'attp':
+        if(!arg) return pais.reply(`Please input text, Example: ${prefix}ttp4 pais`)
+        try{
+        pais.replyWithSticker({url: `http://api.lolhuman.xyz/api/attp?apikey=${lolKey}&text=${arg}`})
+        } catch(e){
+            console.log('Error ttp4')
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+        }
+        break
+
 
     }
     })
