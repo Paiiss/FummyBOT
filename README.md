@@ -27,11 +27,14 @@
 Edit the required value in `config.json`.
 ```json
 {
-    "Token": "TOKEN BOT",
+    "Token": "Token lu asw",
     "paisKey": "Fummy",
     "lolKey": "Apikey",
-    "vhKey": "Apikey" 
+    "vhKey": "Apikey",
+    "prefix": "/",
+    "ownerbot": "Pais"
 }
+
 ```
 
 ## Apikey
@@ -73,3 +76,4 @@ Edit the required value in `config.json`.
 * [`Puh dhil`](https://github.com/Dhil-J)
 * [`vhtear`](https://github.com/fckveza/)
 * [`Aldi`](https://github.com/Alphanum404)
+* Ben
