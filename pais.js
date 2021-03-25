@@ -159,8 +159,9 @@ function sendMessageStart(ctx){
                 case 22: waktoo = "Malam🌚 "; break;
                 case 23: waktoo = "Tengah Malam🌚 "; break;
             }
-            var tampilTanggal = "*Tgl :* " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
-            var tampilWaktu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib";
+            var tampilTanggall = "Tgl : " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
+            var tampilWaktuu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib";
+            // console.log(tampilTanggall)
 
     // Credit ny jgn di ilangin ya ^_^
 
@@ -171,9 +172,6 @@ function sendMessageStart(ctx){
 ❖ Owner : *${ownerbot}*
 
 - * Req Fiture?, Chat* [pais](http://t.me/Paiisse)
-
-❖ ${tampilTanggal}
-❖ ${tampilWaktu}
 
 ❖ *Note:* \`This bot script is open source, link:\` [FummyBOT](https://github.com/Paiiss/FummyBOT) by [PAIS](http://t.me/Paiisse)
 
@@ -2082,6 +2080,21 @@ bot.on('text', async pais => {
                 pais.replyWithPhoto({source: fs.createReadStream(`./data/pais/${bg}.jpg`)})
             })
             break
+    case prefix + 'hai':
+        pais.deleteMessage()
+        pais.reply(`Lanjut besok pack, ngefix error bagian tampil waktu :v`,
+            {
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: 'Info👼🏻', callback_data: 'info'}
+                        ]
+                    ]
+                },
+                parse_mode: "Markdown",
+                disable_web_page_preview: "true" 
+            })
+        break
 
     }
     })
