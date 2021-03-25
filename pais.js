@@ -1892,13 +1892,23 @@ bot.on('text', async pais => {
         break
 
     case prefix + 'nulis':
-            const diTulis = `Website tidak hanya soal konten saja. Jika ingin menjadi webmaster, ada sejumlah hal yang harus Anda pahami, seperti apa itu AJAX. AJAX adalah sebuah singkatan dari Asynchronous Javascript and XML dan mengacu pada sekumpulan teknis pengembangan web (web development) yang memungkinkan aplikasi web untuk bekerja secara asynchronous (tidak langsung) – memproses setiap request (permintaan) yang datang ke server di sisi background. Agar lebih memahami apa itu AJAX, kami akan membahas terminologinya satu per satu.
-
-JavaScript merupakan bahasa coding yang kerap digunakan. Salah satu fungsinya adalah untuk mengelola konten dinamis website dan memungkinkan interaksi user yang dinamis. Layaknya HTML, XML atau eXtensible Markup Language adalah varian lain dari bahasa markup. Jika HTML dirancang untuk menampilkan data, maka XML dirancang untuk memuat dan membawa data.
-
-Baik JavaScript maupun XML bekerja secara asynchronous di dalam AJAX. Alhasil, aplikasi web yang menggunakan AJAX dapat mengirimkan dan menerima data dari server tanpa harus mereload`
+            if(!arg) return pais.reply(`Please input text, Example: ${prefix}nulis pais anak yang baik`)
+            const diTulis = arg
+            // const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
+            // const panjangBaris = panjangKalimat.split('\n').slice(0, 28).join('\n')
             const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
-            const panjangBaris = panjangKalimat.split('\n').slice(0, 28).join('\n')
+                let Textpanjang = ''
+lengthtext = 1
+console.log(panjangKalimat)
+ for (var i = 0; i < panjangKalimat.length; i++) { 
+ if (i == 55*lengthtext){
+     Textpanjang+= '\n'
+     lengthtext++
+      Textpanjang+= panjangKalimat[i]
+   } else {
+     Textpanjang+= panjangKalimat[i]
+ }
+ }
             // console.log(panjangBaris)
             spawn('convert', [
                 './data/result.jpg',
@@ -1912,7 +1922,7 @@ Baik JavaScript maupun XML bekerja secara asynchronous di dalam AJAX. Alhasil, a
                 '-7.5',
                 '-annotate',
                 '+344+142',
-                panjangBaris,
+                Textpanjang,
                 './data/pais/sipa.jpg'
             ])
             .on('error', () => pais.reply(`Error`))
