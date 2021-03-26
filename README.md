@@ -17,6 +17,46 @@
 
 ## This script is free / open to anyone! If you want to add orders, please contribute / withdraw requests! Buying and selling scripts is prohibited!
 
+# Features
+
+|      Downloader     | Availability |
+| :-----------------: | :----------: |
+|   Tiktok Wm         |      ✔️      |
+|   Tiktok No Wm      |      ✔️      |
+|   Youtube Mp3       |      ✔️      |
+|   Youtube Video     |      ✔️      |
+|   Youtube Search    |      ✔️      |
+|   Xnxx Download     |      ✔️      |
+|   Instagram Post    |      ✔️      |
+
+
+|        Music        | Availability |
+| :-----------------: | :----------: |
+|       Joox          |      ✔️      |
+|      Joox Plus      |      ✔️      |
+|        Play         |      ✔️      |
+|        Lyric        |      ✔️      |
+
+|       Education     | Availability |
+| :-----------------: | :----------: |
+|       Merdeka       |      ✔️      |
+|        Corona       |      ✔️      |
+|       Coronaind     |      ✔️      |
+|        Gempa        |      ✔️      |
+|      Wikipedia      |      ✔️      |
+|      pinterest      |      ✔️      |
+
+|         Other       | Availability |
+| :-----------------: | :----------: |
+|       Truth Id      |      ✔️      |
+|        Nulis        |      ✔️      |
+|       Nick Ml       |      ✔️      |
+|       Short Url     |      ✔️      |
+|         Spam1       |      ✔️      |
+|       Arti Nama     |      ✔️      |
+|          Etc        |      ++      |
+
+
 ## How to get a bot token
 * Open telegram and search for @BotFather
 * Type / newbot
