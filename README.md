@@ -117,3 +117,6 @@ Edit the required value in `config.json`.
 * [`vhtear`](https://github.com/fckveza/)
 * [`Aldi`](https://github.com/Alphanum404)
 * Ben
+
+# Read docs
+* [`Telegraf`](https://telegraf.js.org/v3#/)
