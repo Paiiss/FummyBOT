@@ -9,8 +9,9 @@ const speed = require(`performance-now`);
 const fs = require('fs');
 const { createGzip } = require('zlib');
 const { spawn, exec } = require('child_process')
+const canvacord = require("canvacord");
 
-// Load Filef
+// Load File
 let setting = JSON.parse(fs.readFileSync(`./lib/setting.json`))
 
 let {
@@ -22,6 +23,21 @@ let {
     ownerbot
 } = setting
 
+let {
+    menu,
+    donasi,
+    info,
+    docs,
+    menunulis,
+    othermenu,
+    menustalk,
+    menumaker,
+    menudownload,
+    menumusic,
+    newsmenu,
+    animemenu,
+    randommenu
+} = require('./lib/menu')
             /* Bot */
 
 const bot = new Telegraf(Token)
@@ -161,41 +177,10 @@ function sendMessageStart(ctx){
             }
             var tampilTanggall = "Tgl : " + hari + ", " + tanggal + " " + bulan1 + " " + tahun;
             var tampilWaktuu = "*" + waktoo+ "*" + ", " + "*Jam :* " + jam + ":" + menit + ":" + detik + " Wib";
-            // console.log(tampilTanggall)
 
     // Credit ny jgn di ilangin ya ^_^
-
-    const tm = `●▬▬▬▬▬ஜ۩ஜ▬▬▬▬▬●
-
-❖ NameBot : *${ctx.botInfo.first_name}*
-❖ Version : \`2.0.0\`
-❖ Owner : *${ownerbot}*
-
-- * Req Fiture?, Chat* [pais](http://t.me/Paiisse)
-
-❖ *Note:* \`This bot script is open source, link:\` [FummyBOT](https://github.com/Paiiss/FummyBOT) by [PAIS](http://t.me/Paiisse)
-
-❖ Thanks to: 
-- Pais
-- Lolhum
-- Ben
-- Aldi :v
-- And my friends
-
-❖ Rest-api in use:
-- [Pais-Api](http://pencarikode.xyz/)
-- [Lolhuman](http://api.lolhuman.xyz/)
-- [Vhtear](https://vhtear.com/)
-- [ZeksApi](https://api.zeks.xyz/)
-
-
-ㅤㅤㅤㅤㅤㅤ╭∩╮ʕ•ᴥ•ʔ╭∩╮
-ㅤㅤㅤㅤㅤㅤㅤㅤ@𝓟𝓪𝓲𝓼
-ㅤㅤㅤㅤㅤㅤㅤ⌤⌤⌤⌤⌤
-`
         
-    // Credit ny jgn di ilangin ya ^_^
-    bot.telegram.sendMessage(ctx.chat.id, tm,
+    bot.telegram.sendMessage(ctx.chat.id, menu(prefix, ctx, ownerbot),
     {
         reply_markup: {
             inline_keyboard: [
@@ -216,18 +201,7 @@ function sendMessageStart(ctx){
 }
 
 function sendInfo(ctx){
-    const text = `●▬▬▬▬ஜ𝐈𝐧𝐟𝐨ஜ▬▬▬▬●
-
-This is a free bot for everyone to use😳.
-
-If you want to donate you can click the button below💕💞.
-
-If there is an error please report it to pais / admin😁.
-
-I hope you like this bot🥰.
-
-Greetings from pais.`
-    bot.telegram.sendMessage(ctx.chat.id, text,
+    bot.telegram.sendMessage(ctx.chat.id, info(),
         {
             reply_markup: {
                 inline_keyboard: [
@@ -245,23 +219,7 @@ Greetings from pais.`
         })
 }
 function sendDonation(ctx){
-    const tmenu = `●▬▬▬▬ஜ𝐃𝐨𝐧𝐚𝐭𝐞ஜ▬▬▬▬●
-
-Glad to hear that you wanted to donate to pais. All donations will help and motivate him to make me better in the future.
-
-If you really want to donate, here are the methods available:
-
-• DANA / GOPAY
-⤷ 685805609094
-
-• Indosat Credit
-⤷ 685805609094
-
-Very Thanks for Your donation. 😁
-
-
-` 
-    bot.telegram.sendMessage(ctx.chat.id, tmenu ,
+    bot.telegram.sendMessage(ctx.chat.id, donasi(),
     {
         reply_markup: {
             inline_keyboard: [
@@ -275,13 +233,7 @@ Very Thanks for Your donation. 😁
     })
 }
 function sendMessageMenu(ctx){
-    const tmenu = `●▬▬▬ஜ𝐌𝐞𝐧𝐮ஜ▬▬▬●
-
-Bot menu by: ${ownerbot}💞
-
-Select one of the blocks below:
-` 
-    bot.telegram.sendMessage(ctx.chat.id, tmenu ,
+    bot.telegram.sendMessage(ctx.chat.id, docs(ownerbot),
     {
         reply_markup: {
             inline_keyboard: [
@@ -398,16 +350,10 @@ bot.command('menu', (ctx) => {
 })
 
             /* Di atas yg make func */
+
 bot.action('nulis', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐍𝐮𝐥𝐢𝐬 𝐌𝐞𝐧𝐮 ⌋────✿
-    
-❏ ${prefix}nulis 
-❏ ${prefix}nulis2 
-❏ ${prefix}mager
-
-
-`,
+    bot.telegram.sendMessage(ctx.chat.id, menunulis(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -422,15 +368,7 @@ bot.action('nulis', (ctx) => {
 
 bot.action('etc', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐎𝐭𝐡𝐞𝐫 𝐌𝐞𝐧𝐮 ⌋────✿
-    
-❏${prefix}truthid 
-❏ ${prefix}nulis 
-❏ ${prefix}nickml
-❏ ${prefix}short
-❏ ${prefix}spam1
-❏ ${prefix}artinama
-`,
+    bot.telegram.sendMessage(ctx.chat.id, othermenu(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -445,11 +383,7 @@ bot.action('etc', (ctx) => {
 
 bot.action('stalk', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐒𝐭𝐚𝐥𝐤 𝐌𝐞𝐧𝐮 ⌋────✿
-    
-❏ ${prefix}igstalk 
-❏ ${prefix}githubstalk
-`,
+    bot.telegram.sendMessage(ctx.chat.id, menustalk(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -465,25 +399,7 @@ bot.action('stalk', (ctx) => {
 
 bot.action('textmaker', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿────⌈ 𝐓𝐞𝐱𝐭 𝐌𝐚𝐤𝐞𝐫 ⌋────✿
-    
-❏ ${prefix}bp 
-❏ ${prefix}shadow 
-❏ ${prefix}tolol
-❏ ${prefix}codwarzone 
-❏ ${prefix}coffe
-❏ ${prefix}bannerlol 
-
-❏ ${prefix}maker ( Read how to use )
-
-❏ ${prefix}ttp
-❏ ${prefix}ttp2
-❏ ${prefix}ttp3
-❏ ${prefix}ttp4
-
-❏ ${prefix}harta
-
-`,
+    bot.telegram.sendMessage(ctx.chat.id, menumaker(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -498,17 +414,7 @@ bot.action('textmaker', (ctx) => {
 
 bot.action('download', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐃𝐨𝐰𝐧𝐥𝐨𝐚𝐝 𝐌𝐞𝐧𝐮 ⌋───✿
-
-❏ ${prefix}tiktok 
-❏ ${prefix}tiktoknowm 
-❏ ${prefix}ytmp3 
-❏ ${prefix}ytvideo 
-❏ ${prefix}ytsearch 
-❏ ${prefix}xnxx 
-❏ ${prefix}instagram
-
-`,
+    bot.telegram.sendMessage(ctx.chat.id, menudownload(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -523,13 +429,7 @@ bot.action('download', (ctx) => {
 
 bot.action('music', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿───⌈ 𝐌𝐮𝐬𝐢𝐜 𝐌𝐞𝐧𝐮 ⌋───✿
-    
-❏ ${prefix}joox 
-❏ ${prefix}jooxplus 
-❏ ${prefix}play 
-❏ ${prefix}lyric 
-`,
+    bot.telegram.sendMessage(ctx.chat.id, menumusic(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -544,15 +444,7 @@ bot.action('music', (ctx) => {
 
 bot.action('news', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿─────⌈ 𝐄𝐝𝐮𝐜𝐚𝐭𝐢𝐨𝐧 𝐌𝐞𝐧𝐮 ⌋─────✿
-    
-❏ ${prefix}merdeka 
-❏ ${prefix}wikipedia 
-❏ ${prefix}gempa 
-❏ ${prefix}corona 
-❏ ${prefix}coronaind 
-❏ ${prefix}pinterest 
-`,
+    bot.telegram.sendMessage(ctx.chat.id, newsmenu(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -567,26 +459,7 @@ bot.action('news', (ctx) => {
 
 bot.action('anime', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐀𝐧𝐢𝐦𝐞 𝐌𝐞𝐧𝐮 ⌋──✿
-  
-❏ ${prefix}animesearch 
-❏ ${prefix}loli
-❏ ${prefix}elf
-❏ ${prefix}neko
-❏ ${prefix}waifu
-❏ ${prefix}husbu
-❏ ${prefix}shota
-❏ ${prefix}sagiri
-❏ ${prefix}shinobu
-❏ ${prefix}megumin
-❏ ${prefix}wallnime
-❏ ${prefix}yaoi
-❏ ${prefix}ecchi
-❏ ${prefix}ahegao
-❏ ${prefix}hentai 
-❏ ${prefix}nsfwloli 
-❏ ${prefix}nsfwneko 
-`,
+    bot.telegram.sendMessage(ctx.chat.id, animemenu(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -601,12 +474,7 @@ bot.action('anime', (ctx) => {
 
 bot.action('random', (ctx) => {
     ctx.deleteMessage()
-    bot.telegram.sendMessage(ctx.chat.id, `✿──⌈ 𝐑𝐚𝐧𝐝𝐨𝐦 𝐌𝐞𝐧𝐮 ⌋──✿
-  
-❏ ${prefix}blackpink
-❏ ${prefix}exo
-❏ ${prefix}bts
-`,
+    bot.telegram.sendMessage(ctx.chat.id, randommenu(prefix),
     {
         reply_markup: {
             inline_keyboard: [
@@ -630,40 +498,7 @@ bot.action('random', (ctx) => {
 //     }
 //     next()
 // })
-
-bot.command('contoh', async (ctx) => {
-    let input = ctx.message.text
-    let inputArray = input.split(" ")
-    let message = "";
-    
-    if(inputArray.length == 1){
-        message = "masuin text"
-        ctx.reply(message)
-    } else{
-        sendProses(ctx)
-        inputArray.shift();
-        messager = inputArray.join(" ")
-        ctx.reply(messager)
-    }
-})
-
-
-                /* Fitur */
-
-
-bot.command('truthid', (ctx) => {
-    axios.get (`https://pencarikode.xyz/api/truthid?apikey=${paisKey}`)
-    .then(res => {
-        // console.log(res.data.message)
-        ctx.reply(res.data.message)
-    }).catch(e => {
-        console.log(e)
-    })
-
-    })
-
             /* Education Fiture */
-
 
 bot.command('merdeka', async (ctx) => {
         try{
@@ -906,93 +741,6 @@ bot.command('ytmp3', async (ctx) => {
         // console.log(data.link[0].link)
         ctx.replyWithAudio({ url: data.link[0].link}, {title: data.title, thumb: data.thumbnail, artist: data.title})
         } 
-    }
-})
-
-bot.command('joox', async (ctx) => {
-        let input = ctx.message.text
-        let inputArray = input.split(" ")
-        let message = "";
-        
-        if(inputArray.length == 1){
-            message = "Harap masukan judul, Contoh /joox see you again"
-            ctx.reply(message)
-        } else{
-            sendsearch(ctx)
-            inputArray.shift();
-            messager = inputArray.join(" ")
-            const linke = await axios.get(`https://pencarikode.xyz/download/joox?search=${messager}&apikey=${paisKey}`)
-            const link = linke.data.result
-            if(!link.mp3_url){
-                ctx.reply(`Song not found!`)
-            }else{
-            ctx.replyWithPhoto({ url: link.img_url}, { caption: `──────✿ 𝐉𝐨𝐨𝐱 ✿──────
-
-❖ Title: ${link.judul}
-❖ Artist: ${link.artist}
-❖ Album: ${link.album}
-❖ Size: ${link.filesize}
-❖ ext: ${link.ext}
-❖ duration: ${link.duration}`})
-            sendLoading(ctx)
-            ctx.replyWithAudio({ url: link.mp3_url})
-            }
-        }
-})
-
-bot.command('lyric', async (ctx) => {
-    let input = ctx.message.text
-    let inputArray = input.split(" ")
-    let message = "";
-    
-    if(inputArray.length == 1){
-        message = "Harap masukan judul, Contoh /lyric see you again"
-        ctx.reply(message)
-    } else{
-        sendsearch(ctx)
-        inputArray.shift();
-        messager = inputArray.join(" ")
-        const linke = await axios.get(`http://lolhuman.herokuapp.com/api/lirik?apikey=${lolKey}&query=${messager}`)
-        const link = linke.data.result
-        if(!link){
-            ctx.reply(`Song not found!`)
-        }else{
-        ctx.reply(link)
-      }  }
-})
-
-bot.command('jooxplus', async (ctx) => {
-    let input = ctx.message.text
-    let inputArray = input.split(" ")
-    let message = "";
-    
-    if(inputArray.length == 1){
-        message = "Harap masukan judul, Contoh /jooxplus snowman"
-        ctx.reply(message)
-    } else{
-        sendsearch(ctx)
-        inputArray.shift();
-        messager = inputArray.join(" ")
-        const linke = await axios.get(`http://lolhuman.herokuapp.com/api/jooxplay?apikey=${lolKey}&query=${messager}`)
-        const link = linke.data.result
-        if(!link.image){
-            ctx.reply(`Song not found!`)
-        }else{
-        ctx.replyWithPhoto({ url: link.image}, { caption: `──────✿ 𝐉𝐨𝐨𝐱 ✿──────
-
-❖ Song: ${link.info.song}
-❖ Singer: ${link.info.singer}
-❖ Album: ${link.info.album}
-❖ Size: ${link.audio[2].size}
-❖ duration: ${link.info.duration}
-
-`}) 
-
-        await sleep(1000) 
-        ctx.reply(`❖ Lirik: ${link.lirik}`)
-        sendLoading(ctx)
-        ctx.replyWithAudio({ url: link.audio[2].link}, {thumb: link.image, album: link.info.album, artist: link.info.singer, duration: link.info.duration, title: link.info.song})
-        }
     }
 })
 
@@ -1731,6 +1479,16 @@ bot.command('tes', async (ctx) => {
     }
 })
 
+        /* Function untk yg di case */
+
+function sendcari(pais){
+    pais.reply(`Wait, the bot is being searched`)
+        .then((result) => { setTimeout(() => {
+            bot.telegram.deleteMessage(pais.chat.id, result.message_id)
+        }, 10 *  250)})
+        .catch(err => console.log(err))
+    }
+
 bot.on('text', async pais => {
     
     let body = pais.update.message.text || ''
@@ -1743,10 +1501,12 @@ bot.on('text', async pais => {
 
     switch(command){
 
+        
     case prefix + 'spam1':
         if(!arg) return pais.reply(`Please input number phone`)
         try{
             linkspam = await axios.get(`http://api.lolhuman.xyz/api/sms/spam1?apikey=${lolKey}&nomor=${arg}`)
+            data = linkspam.data.result
             console.log('Sukses mengirim spam ke nomor '+ arg)
             pais.reply(`Successfully sent spam to number ${arg}🤝🏻`)
         } catch(e){
@@ -1896,16 +1656,21 @@ bot.on('text', async pais => {
             pais.reply(`Error!, Please report to ${ownerbot}`)
         }
         break
-
+    case prefix + 'truthid':
+        try{
+        link = await axios.get(`https://pencarikode.xyz/api/truthid?apikey=${paisKey}`)
+        pais.reply(link.data.message)
+        } catch(e){
+            pais.reply(`Error, Please report to ${ownerbot}`)
+            console.log(`TrurhId Error!`)
+        }
+        break
     case prefix + 'nulis'://By Mfarels
             if(!arg) return pais.reply(`Please input text, Example: ${prefix}nulis pais anak yang baik`)
             const diTulis = arg
-            // const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
-            // const panjangBaris = panjangKalimat.split('\n').slice(0, 28).join('\n')
             const panjangKalimat = diTulis.replace(/(\S+\s*){1,10}/g, '$&\n')
             let Textpanjang = ''
             lengthtext = 1
-            // console.log(panjangKalimat)
             for (var i = 0; i < panjangKalimat.length; i++) { 
             if (i == 55*lengthtext){
             Textpanjang+= '\n'
@@ -2080,24 +1845,92 @@ bot.on('text', async pais => {
                 pais.replyWithPhoto({source: fs.createReadStream(`./data/pais/${bg}.jpg`)})
             })
             break
-    case prefix + 'hai':
-        pais.deleteMessage()
-        pais.reply(`Lanjut besok pack, ngefix error bagian tampil waktu :v`,
-            {
-                reply_markup: {
-                    inline_keyboard: [
-                        [
-                            { text: 'Info👼🏻', callback_data: 'info'}
-                        ]
-                    ]
-                },
-                parse_mode: "Markdown",
-                disable_web_page_preview: "true" 
+    case prefix + 'lyric':
+        if(!arg) return pais.reply(`Harap masukan judul, Contoh: ${prefix}lyric snow man`)
+        try{
+            sendcari(pais)
+            link = await axios.get(`http://lolhuman.herokuapp.com/api/lirik?apikey=${lolKey}&query=${arg}`)
+            data = link.data.result
+            if(!data) return pais.reply(`Lagu tidak di temukan!`)
+            pais.reply(data)
+        }catch(e){
+            pais.reply(`Lyric Error!, Please report to ${ownerbot}`)
+        }
+        break
+    case prefix + 'joox':
+        if(!arg) return pais.reply(`Harap masukan judul lagu, Contoh: ${prefix}joox snow man`)
+        sendcari(pais)
+        const linke = await axios.get(`https://pencarikode.xyz/download/joox?search=${arg}&apikey=${paisKey}`)
+            const link = linke.data.result
+            if(!link.mp3_url){
+                pais.reply(`Song not found!`)
+            }else{
+            pais.replyWithPhoto({ url: link.img_url}, { caption: `──────✿ 𝐉𝐨𝐨𝐱 ✿──────
+
+❖ Title: ${link.judul}
+❖ Artist: ${link.artist}
+❖ Album: ${link.album}
+❖ Size: ${link.filesize}
+❖ ext: ${link.ext}
+❖ duration: ${link.duration}`})
+            pais.replyWithAudio({ url: link.mp3_url})
+            }
+        break
+    case prefix + 'jooxplus':
+        if(!arg) return pais.reply(`Please input title, Example: ${prefix}jooxplus snowman`)
+            sendcari(pais)
+        try{
+            link = await axios.get(`http://api.lolhuman.xyz/api/jooxplay?apikey=${lolKey}&query=${arg}`)
+            const { image, info, audio } = link.data.result
+            pais.replyWithPhoto({url: image}, {caption: `──────✿ 𝐉𝐨𝐨𝐱 ✿──────
+
+❖ Song: ${info.song}
+❖ Singer: ${info.singer}
+❖ Album: ${info.album}
+❖ Size: ${audio[1].size}
+❖ Duration: ${info.duration}
+❖ Reso: ${audio[1].reso}`} )
+            pais .replyWithAudio({ url: audio[1].link}, {thumb: image, album: info.album, artist: info.singer, duration: info.duration, title: info.song})
+        }catch(e){
+            console.log(`Jooxplus Error!`)
+            pais.reply(`Title Not Found!`)
+        }
+        break
+    case prefix + 'bayu':
+        const buffer = await axios.get('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTQcODjk7AcA4wb_9OLzoeAdpGwmkJqOYxEBA&usqp=CAU')
+        let image = await canvacord.Canvas.trigger(buffer.data);
+        pais.replyWithVideo(image)
+        break
+    case prefix + 'drakorongo':
+        try{
+        link = await axios.get(`http://lolhuman.herokuapp.com/api/drakorongoing?apikey=${lolKey}`)
+        const { result } = link.data
+            const ithasil = result.slice(0, 4)
+            ithasil.forEach(async(res) => {
+                pais.replyWithPhoto({url: res.thumbnail, caption: `- Titile: ${res.title}\n- Link: ${res.link}\n- Year: ${res.year}\n- Total eps: ${res.total_episode}- Genre: ${res.genre}`})
             })
+        
+        } catch(e){
+            pais.reply(`Error!, Please report to ${ownerbot}`)
+            console.log(`${command} Error!`)
+        }
         break
 
     }
     })
+/*
+            pais.reply(`nayu`,
+            {   
+                reply_markup: {
+                    inline_keyboard: [
+                        [
+                            { text: 'lagu', reply: 'Yahha'}
+                        ]
+                    ]
+                },
+                parse_mode: "Markdown"
+            })
+            */
 
 //ctx.reply(`err`)
 bot.launch()
